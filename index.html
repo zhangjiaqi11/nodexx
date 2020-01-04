@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<script>
+    function fontSize() {
+        let view_width = document.getElementsByTagName('html')[0].getBoundingClientRect().width;
+        let _html = document.getElementsByTagName('html')[0];
+        view_width > 768 ? _html.style.fontSize = 100 * 768 / 375 + 'px' : _html.style.fontSize = view_width * 100 /
+            375 + 'px';
+    }
+    fontSize();
+    window.onresize = function () {
+        fontSize();
+    }
+</script>
+
+<body>
+    <div class="header">
+        订餐
+    </div>
+    <div class="main">
+        <dl class="select">
+            <dt class="bu">请选择所属部门</dt>
+            <dd>
+                <ul>
+                    <li><a href="#">H5</a></li>
+                    <li><a href="#">后端</a></li>
+                    <li><a href="#">测试</a></li>
+                    <li><a href="#">产品</a></li>
+                    <li><a href="#">运维</a></li>
+                </ul>
+            </dd>
+        </dl>
+        <input type="text" id="name" placeholder="请输入名字"><br>
+        <input type="text" id="account" placeholder="请输入UM账号">
+    </div>
+
+    <div class="submit">
+        提交
+    </div>
+    
+    <script src="./jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".select").each(function () {
+                let s = $(this);
+                let z = parseInt(s.css("z-index"));
+                let dt = $(this).children("dt");
+                let dd = $(this).children("dd");
+                let _show = function () {
+                    dd.slideDown(200);
+                    dt.addClass("cur");
+                    s.css("z-index", z + 1);
+                }; //展开效果
+                let _hide = function () {
+                    dd.slideUp(200);
+                    dt.removeClass("cur");
+                    s.css("z-index", z);
+                }; //关闭效果
+                dt.click(function () {
+                    dd.is(":hidden") ? _show() : _hide();
+                });
+                dd.find("a").click(function () {
+                    dt.html($(this).html());
+                    _hide();
+                }); //选择效果（如需要传值，可自定义参数，在此处返回对应的“value”值 ）
+                $("body").click(function (i) {
+                    !$(i.target).parents(".select").first().is(s) ? _hide() : "";
+                });
+            })
+        })
+    </script>
+    <script src="./js/index.js"></script>
+</body>
+
+</html>
